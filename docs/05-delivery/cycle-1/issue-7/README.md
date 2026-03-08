@@ -1,12 +1,23 @@
-# ISSUE-C1-7
+# ISSUE-C1-7 Build animated splash and transition
 
 ## Status
 
-Plan implementacji jeszcze nie zostal rozpisany.
+Status po przegladzie repo: `zaimplementowane`.
 
-## Zakres
+## Co jest juz zrobione
 
-To issue obejmuje:
+Dowody w repo:
 
-- `TASK-14 Build splash screen UI and animation`,
-- `TASK-15 Connect splash transition to app shell`.
+- `lib/features/splash/presentation/splash_screen.dart` zawiera osobny ekran splasha,
+- splash ma animacje `fade` i `scale`,
+- po czasie nastepuje przejscie do `AppRoutes.home`,
+- przejscie korzysta z `context.go(...)`, wiec splash nie powinien wracac przez standardowy back flow,
+- branding splasha jest podpiety pod `AppConstants` i wspolny theme.
+
+## Co jeszcze zostalo
+
+- potwierdzic lokalnie plynnosc animacji i zachowanie przejscia na rzeczywistym urzadzeniu lub emulatorze.
+
+## Ocena
+
+Od strony zakresu `Cycle 1` to issue jest gotowe i nie blokuje `Cycle 2`.

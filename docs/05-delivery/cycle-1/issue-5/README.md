@@ -1,13 +1,27 @@
-# ISSUE-C1-5
+# ISSUE-C1-5 Setup RAWG API foundation
 
 ## Status
 
-Plan implementacji jeszcze nie zostal rozpisany.
+Status po przegladzie repo: `zaimplementowane z drobnymi punktami do weryfikacji`.
 
-## Zakres
+## Co jest juz zrobione
 
-To issue obejmuje:
+Dowody w repo:
 
-- `TASK-9 Add HTTP dependency and create API client abstraction`,
-- `TASK-10 Define RAWG endpoints and initial DTO models`,
-- `TASK-11 Add secret handling strategy for API key`.
+- zaleznosc HTTP istnieje w `pubspec.yaml` jako `dio`,
+- podstawowa abstrakcja klienta istnieje w `lib/core/network/api_client.dart`,
+- klient domenowy `RAWG` istnieje w `lib/core/network/rawg_api_client.dart`,
+- endpointy sa zebrane w `lib/core/network/rawg_endpoints.dart`,
+- konfiguracja `baseUrl` i `apiKey` istnieje w `lib/core/network/rawg_config.dart`,
+- odczyt sekretu przez `String.fromEnvironment('RAWG_API_KEY')` istnieje w `lib/core/config/app_env.dart`,
+- podstawowe DTO dla listy gry i szczegolow gry istnieja w `lib/core/models/rawg_game_summary_dto.dart` i `lib/core/models/rawg_game_details_dto.dart`.
+
+## Co jeszcze zostalo
+
+- wykonac realny lub smoke request lokalnie z ustawionym `RAWG_API_KEY`,
+- sprawdzic, czy obecne fail-fast zachowanie przy braku klucza jest akceptowalne przed `Cycle 2`,
+- jesli potrzeba, dodac bardziej przyjazny fallback lub komunikat UI dla braku klucza.
+
+## Ocena
+
+Foundation API jest gotowy do dalszej pracy. To issue nie blokuje `Cycle 2`, o ile lokalna weryfikacja requestow nie ujawni problemu.

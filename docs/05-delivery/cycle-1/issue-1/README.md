@@ -1,5 +1,23 @@
 # ISSUE-C1-1 Implementation Plan
 
+## Audit update
+
+Status po przegladzie repo: `prawie domkniete`.
+
+To issue zostalo w duzej mierze zaimplementowane:
+
+- `lib/main.dart` nie zawiera juz Flutter Demo i uruchamia `App`,
+- root widget jest wydzielony do `lib/app/app.dart`,
+- istnieja `lib/core/config/app_env.dart`, `lib/core/constants/app_constants.dart` i `lib/core/network/rawg_config.dart`,
+- struktura `lib/app`, `lib/core` i `lib/features` istnieje,
+- test startowy nie sprawdza juz counter demo.
+
+Otwarte punkty:
+
+- w repo nie widac katalogu `lib/shared/`, mimo ze byl przewidziany w pierwotnym planie,
+- `lib/main.dart` inicjalizuje juz storage, wiec aktualny stan repo wykracza poza czyste foundation z tego issue,
+- formalne domkniecie wymaga lokalnego `flutter analyze` i `flutter test`.
+
 ## 1. Cel dokumentu
 
 Ten dokument opisuje dokladny plan implementacji dla `ISSUE-C1-1 Clean app bootstrap and folder structure` w `Cycle 1 - Foundation and Navigation`.

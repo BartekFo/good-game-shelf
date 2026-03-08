@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/navigation/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_spacing.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -56,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen>
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          color: AppColors.ocean600,
+          color: AppColors.primary,
         ),
         child: Center(
           child: FadeTransition(
@@ -72,7 +73,9 @@ class _SplashScreenState extends State<SplashScreen>
                     decoration: BoxDecoration(
                       color: Colors.white.withValues(alpha: 0.2),
                       shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white24),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.24),
+                      ),
                     ),
                     child: const Icon(
                       Icons.sports_esports_rounded,
@@ -80,21 +83,21 @@ class _SplashScreenState extends State<SplashScreen>
                       color: Colors.white,
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: AppSpacing.lg),
                   Text(
                     AppConstants.appName,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0.4,
-                    ),
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.4,
+                        ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.xs),
                   Text(
                     AppConstants.appTagline,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.white.withValues(alpha: 0.92),
-                    ),
+                          color: Colors.white.withValues(alpha: 0.92),
+                        ),
                     textAlign: TextAlign.center,
                   ),
                 ],
