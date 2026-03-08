@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/navigation/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -57,7 +58,14 @@ class _SplashScreenState extends State<SplashScreen>
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          color: AppColors.primary,
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              AppColors.primary,
+              AppColors.primaryLight,
+            ],
+          ),
         ),
         child: Center(
           child: FadeTransition(
@@ -71,23 +79,23 @@ class _SplashScreenState extends State<SplashScreen>
                     width: 84,
                     height: 84,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
-                      shape: BoxShape.circle,
+                      color: AppColors.surface.withValues(alpha: 0.16),
+                      borderRadius: BorderRadius.circular(AppRadius.pill),
                       border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.24),
+                        color: AppColors.surface.withValues(alpha: 0.24),
                       ),
                     ),
                     child: const Icon(
                       Icons.sports_esports_rounded,
                       size: 42,
-                      color: Colors.white,
+                      color: AppColors.onPrimary,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   Text(
                     AppConstants.appName,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          color: Colors.white,
+                          color: AppColors.onPrimary,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 0.4,
                         ),
@@ -96,7 +104,7 @@ class _SplashScreenState extends State<SplashScreen>
                   Text(
                     AppConstants.appTagline,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.white.withValues(alpha: 0.92),
+                          color: AppColors.onPrimary.withValues(alpha: 0.92),
                         ),
                     textAlign: TextAlign.center,
                   ),

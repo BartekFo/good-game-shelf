@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../core/network/api_client.dart';
 import '../core/network/rawg_api_client.dart';
+import '../core/theme/app_spacing.dart';
 import '../features/home/data/discovery_repository.dart';
 import '../features/home/presentation/home_screen.dart';
 import '../features/home/state/home_notifier.dart';
@@ -20,6 +21,7 @@ class AppShell extends StatelessWidget {
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: NavigationBar(
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: (int index) {
           navigationShell.goBranch(index);
@@ -63,13 +65,20 @@ class HomeScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('Discover'),
         actions: [
           IconButton(
             icon: const Icon(Icons.person_outline),
             onPressed: () {},
           ),
         ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(AppSpacing.xs),
+          child: Divider(
+            height: 1,
+            color: Theme.of(context).colorScheme.outlineVariant,
+          ),
+        ),
       ),
       body: HomeScreen(homeNotifier: _homeNotifier),
     );
@@ -84,6 +93,13 @@ class SearchScaffold extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search'),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(AppSpacing.xs),
+          child: Divider(
+            height: 1,
+            color: Theme.of(context).colorScheme.outlineVariant,
+          ),
+        ),
       ),
       body: SearchScreen(searchNotifier: _searchNotifier),
     );
@@ -98,6 +114,13 @@ class LibraryScaffold extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Library'),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(AppSpacing.xs),
+          child: Divider(
+            height: 1,
+            color: Theme.of(context).colorScheme.outlineVariant,
+          ),
+        ),
       ),
       body: const LibraryScreen(),
     );

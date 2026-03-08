@@ -7,9 +7,9 @@ class AppShadows {
 
   static const List<BoxShadow> card = [
     BoxShadow(
-      color: Color(0x0A000000),
-      blurRadius: 8,
-      offset: Offset(0, 2),
+      color: Color(0x14000000),
+      blurRadius: 10,
+      offset: Offset(0, 3),
     ),
   ];
 

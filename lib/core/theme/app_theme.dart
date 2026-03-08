@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 import 'app_radius.dart';
+import 'app_shadows.dart';
 import 'app_spacing.dart';
 
 class AppTheme {
@@ -52,6 +53,7 @@ class AppTheme {
       cardTheme: CardThemeData(
         color: AppColors.surface,
         elevation: 0,
+        shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadius.md),
           side: const BorderSide(color: AppColors.border, width: 1),
@@ -138,7 +140,7 @@ class AppTheme {
         indicatorColor: AppColors.primaryContainer,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        height: 80,
+        height: 74,
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
             return const TextStyle(
@@ -165,6 +167,16 @@ class AppTheme {
             size: 24,
           );
         }),
+      ),
+      tabBarTheme: const TabBarThemeData(
+        dividerColor: AppColors.divider,
+        labelColor: AppColors.primary,
+        unselectedLabelColor: AppColors.textSecondary,
+        indicatorColor: AppColors.primary,
+        indicatorSize: TabBarIndicatorSize.label,
+      ),
+      progressIndicatorTheme: const ProgressIndicatorThemeData(
+        color: AppColors.primary,
       ),
       dividerTheme: const DividerThemeData(
         color: AppColors.divider,
@@ -248,6 +260,39 @@ class AppTheme {
           color: AppColors.textTertiary,
         ),
       ),
+      extensions: <ThemeExtension<dynamic>>[
+        const _AppShadowTheme(
+          card: AppShadows.card,
+          elevated: AppShadows.elevated,
+        ),
+      ],
+    );
+  }
+}
+
+class _AppShadowTheme extends ThemeExtension<_AppShadowTheme> {
+  const _AppShadowTheme({required this.card, required this.elevated});
+
+  final List<BoxShadow> card;
+  final List<BoxShadow> elevated;
+
+  @override
+  _AppShadowTheme copyWith({List<BoxShadow>? card, List<BoxShadow>? elevated}) {
+    return _AppShadowTheme(
+      card: card ?? this.card,
+      elevated: elevated ?? this.elevated,
+    );
+  }
+
+  @override
+  _AppShadowTheme lerp(ThemeExtension<_AppShadowTheme>? other, double t) {
+    if (other is! _AppShadowTheme) {
+      return this;
+    }
+
+    return _AppShadowTheme(
+      card: BoxShadow.lerpList(card, other.card, t) ?? card,
+      elevated: BoxShadow.lerpList(elevated, other.elevated, t) ?? elevated,
     );
   }
 }
