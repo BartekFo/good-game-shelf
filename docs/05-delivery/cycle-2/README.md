@@ -2,7 +2,9 @@
 
 ## Status
 
-To jest plan dla `Cycle 2`. Ten cykl nie powinien byc robiony jako pelny one-shot. Najlepszy balans dla tego repo to `2 wieksze issues`, z ktorych kazdy dostarcza czytelny wynik produktowy.
+⚠️ **UPDATED**: Po analizie kodu okazalo sie, ze `ISSUE-C2-1` i `ISSUE-C2-2` sa juz zrealizowane (~90%). Jednak discovery flow nie jest w pelni domkniety. Dodano `ISSUE-C2-3` aby uzupelnic brakujace elementy przed przejsciem do `Cycle 3`.
+
+To jest plan dla `Cycle 2`. Ten cykl nie powinien byc robiony jako pelny one-shot. Najlepszy balans dla tego repo to `3 issues`, z ktorych kazdy dostarcza czytelny wynik produktowy.
 
 ## 1. Cel dokumentu
 
@@ -19,7 +21,7 @@ Po zakonczeniu tego cyklu aplikacja powinna:
 - obslugiwac podstawowe stany `loading`, `empty`, `error`,
 - byc gotowa do budowy `Cycle 3` bez przepisywania discovery flow.
 
-## 3. Dlaczego 2 issues zamiast one-shot
+## 3. Dlaczego 3 issues zamiast one-shot
 
 Ten cykl dotyka jednoczesnie:
 
@@ -28,7 +30,25 @@ Ten cykl dotyka jednoczesnie:
 - nawigacji miedzy ekranami,
 - trzech glownych widokow produktu.
 
-Zrobienie tego jako jeden duzy one-shot zwieksza ryzyko rozjazdu miedzy dokumentacja, kodem i faktycznie dowiezionym zakresem. Z kolei rozbijanie tego na wiele drobnych issue nie daje duzej wartosci. Dlatego ten plan grupuje `Cycle 2` w dwa wieksze, latwe do zweryfikowania bloki.
+Zrobienie tego jako jeden duzy one-shot zwieksza ryzyko rozjazdu miedzy dokumentacja, kodem i faktycznie dowiezionym zakresem. Z kolei rozbijanie tego na wiele drobnych issue nie daje duzej wartosci. Dlatego ten plan grupuje `Cycle 2` w trzy latwe do zweryfikowania bloki.
+
+### Aktualizacja po analizie kodu
+
+Okazalo sie, ze wiekszosc prac z `ISSUE-C2-1` i `ISSUE-C2-2` jest juz zrobiona:
+
+- ✅ `Home` i `Search` dzialaja na realnych danych z API,
+- ✅ repository layer istnieje (`DiscoveryRepository`),
+- ✅ state management dziala (`HomeNotifier`, `SearchNotifier`, `AsyncState`),
+- ✅ wspolny komponent `GameCard` istnieje,
+- ✅ routing do `Game Details` dziala.
+
+Jednak:
+
+- ❌ `GameDetailsScreen` to tylko UI placeholder (nie pobiera danych),
+- ❌ brak `GameDetailsNotifier`,
+- ❌ sekcja "Recently Released" na `Home` pokazuje te same dane co "Popular" (bug).
+
+Dlatego dodano `ISSUE-C2-3` aby uzupelnic te braki.
 
 ## 4. Aktualny stan repo przed Cycle 2
 
@@ -46,8 +66,9 @@ Brakuje przede wszystkim podpiecia realnych danych do ekranu glownego, wyszukiwa
 
 Cycle 2 obejmuje:
 
-- `ISSUE-C2-1 Build discovery lists and search flow`
-- `ISSUE-C2-2 Build game details and connect discovery navigation`
+- `ISSUE-C2-1 Build discovery lists and search flow` ✅ **DONE**
+- `ISSUE-C2-2 Build game details and connect discovery navigation` ⚠️ **MOSTLY DONE** (routing dziala, UI placeholder gotowy)
+- `ISSUE-C2-3 Complete Game Details integration and fix discovery issues` ❌ **TODO** (dodane post-factum)
 
 ## 6. Szczegolowe zadania
 
@@ -214,63 +235,90 @@ Do zrobienia:
 
 ## 7. Proponowany podzial na issues
 
-### ISSUE-C2-1 Build discovery lists and search flow
+### ISSUE-C2-1 Build discovery lists and search flow ✅ DONE
 
 Obejmuje:
 
-- `TASK-1`
-- `TASK-2`
-- `TASK-3`
-- `TASK-4`
-- `TASK-5`
-- `TASK-6`
+- `TASK-1` ✅
+- `TASK-2` ✅
+- `TASK-3` ✅
+- `TASK-4` ✅
+- `TASK-5` ✅
+- `TASK-6` ✅
 
 Rezultat:
 
 - `Home` i `Search` dzialaja na realnych danych,
 - discovery ma wspolne komponenty i podstawowa obsluge stanow.
 
-### ISSUE-C2-2 Build game details and connect discovery navigation
+**Status**: Zrealizowane w kodzie. Home i Search dzialaja z `DiscoveryRepository`, `HomeNotifier`, `SearchNotifier`, `AsyncState` i `GameCard`.
+
+### ISSUE-C2-2 Build game details and connect discovery navigation ⚠️ MOSTLY DONE
 
 Obejmuje:
 
-- `TASK-1`
-- `TASK-2`
-- `TASK-3`
-- `TASK-5`
-- `TASK-7`
-- `TASK-8`
-- `TASK-9`
-- `TASK-10`
+- `TASK-1` ✅
+- `TASK-2` ⚠️ (endpoint istnieje, ale nie jest uzywany)
+- `TASK-3` ❌ (brak GameDetailsNotifier)
+- `TASK-5` ✅
+- `TASK-7` ✅
+- `TASK-8` ❌ (tylko UI placeholder)
+- `TASK-9` ❌
+- `TASK-10` ⚠️ (Home i Search maja, Details nie)
 
 Rezultat:
 
-- uzytkownik moze przejsc z discovery do realnego ekranu szczegolow,
-- flow `Home/Search -> Game Details` jest gotowy pod dalsze funkcje `Cycle 3`.
+- uzytkownik moze przejsc z discovery do ekranu szczegolow,
+- flow `Home/Search -> Game Details` routing dziala, ale ekran nie pobiera danych.
+
+**Status**: Routing gotowy, UI placeholder istnieje, ale brak integracji z API.
+
+### ISSUE-C2-3 Complete Game Details integration and fix discovery issues ❌ TODO
+
+**Nowe issue dodane po analizie kodu.**
+
+Obejmuje:
+
+- naprawienie bug'a z "Recently Released" na Home (pokazuje te same dane co Popular),
+- dodanie `GameDetailsNotifier` z state management,
+- podlaczenie `RawgApiClient.fetchGameDetails()` do ekranu,
+- wyswietlanie realnych danych gry,
+- obsluga stanow loading/error/retry dla details,
+- opcjonalnie: screenshots carousel.
+
+Rezultat:
+
+- `Game Details` pobiera i wyswietla prawdziwe dane,
+- wszystkie sekcje na `Home` pokazuja rozne gry,
+- discovery flow jest w pelni funkcjonalny i gotowy pod `Cycle 3`.
+
+**Szczegoly**: Zobacz `docs/05-delivery/cycle-2/issue-3/README.md`
 
 ## 8. Kolejnosc realizacji
 
 Najlepsza kolejnosc prac:
 
-1. uporzadkowac structure i repository,
-2. domknac `Home`,
-3. domknac `Search`,
-4. podpiac nawigacje do details,
-5. domknac `Game Details`,
-6. sprawdzic loading, empty i error states,
-7. wykonac szybki sanity check.
+1. ~~uporzadkowac structure i repository~~ ✅ DONE
+2. ~~domknac `Home`~~ ✅ DONE
+3. ~~domknac `Search`~~ ✅ DONE
+4. ~~podpiac nawigacje do details~~ ✅ DONE (routing dziala)
+5. domknac `Game Details` ❌ TODO (`ISSUE-C2-3`)
+6. sprawdzic loading, empty i error states ⚠️ PARTIAL (brakuje dla Details)
+7. wykonac szybki sanity check ❌ TODO
 
 ## 9. Definition of done dla Cycle 2
 
 Cycle 2 jest zamkniety, jesli:
 
-- `Home` pokazuje realne listy gier,
-- `Search` zwraca realne wyniki z API,
-- uzytkownik moze wejsc do `Game Details` z elementow discovery,
-- `Game Details` pokazuje realne dane gry,
-- `Home`, `Search` i `Game Details` obsluguja `loading`, `empty` i `error`,
-- nie ma juz technicznych placeholderow w glownym discovery flow,
-- architektura nie miesza widgetow z logika requestow.
+- ✅ `Home` pokazuje realne listy gier,
+- ✅ `Search` zwraca realne wyniki z API,
+- ✅ uzytkownik moze wejsc do `Game Details` z elementow discovery (routing dziala),
+- ❌ `Game Details` pokazuje realne dane gry (placeholder, nie pobiera danych),
+- ⚠️ `Home`, `Search` i `Game Details` obsluguja `loading`, `empty` i `error` (Home i Search maja, Details nie),
+- ⚠️ nie ma juz technicznych placeholderow w glownym discovery flow (Details nadal placeholder),
+- ✅ architektura nie miesza widgetow z logika requestow.
+
+**Aktualny status Cycle 2**: ~70-80% zrobione. `ISSUE-C2-3` ma uzupelnic pozostale 20-30%.
 
 ## 10. Verify po implementacji
 
