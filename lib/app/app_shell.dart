@@ -50,9 +50,9 @@ class AppShell extends StatelessWidget {
 
 final _apiClient = ApiClient();
 final _rawgApiClient = RawgApiClient(_apiClient);
-final _discoveryRepository = DiscoveryRepository(_rawgApiClient);
-final _homeNotifier = HomeNotifier(_discoveryRepository);
-final _searchNotifier = SearchNotifier(_discoveryRepository);
+final discoveryRepository = DiscoveryRepository(_rawgApiClient);
+final _homeNotifier = HomeNotifier(discoveryRepository);
+final _searchNotifier = SearchNotifier(discoveryRepository);
 
 final Widget homeBranchRoot = const HomeScaffold();
 final Widget searchBranchRoot = const SearchScaffold();

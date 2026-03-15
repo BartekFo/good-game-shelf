@@ -8,18 +8,22 @@ class HomeState {
   const HomeState({
     this.trendingGames = const AsyncLoading(),
     this.popularGames = const AsyncLoading(),
+    this.recentlyReleasedGames = const AsyncLoading(),
   });
 
   final AsyncState<List<RawgGameSummaryDto>> trendingGames;
   final AsyncState<List<RawgGameSummaryDto>> popularGames;
+  final AsyncState<List<RawgGameSummaryDto>> recentlyReleasedGames;
 
   HomeState copyWith({
     AsyncState<List<RawgGameSummaryDto>>? trendingGames,
     AsyncState<List<RawgGameSummaryDto>>? popularGames,
+    AsyncState<List<RawgGameSummaryDto>>? recentlyReleasedGames,
   }) {
     return HomeState(
       trendingGames: trendingGames ?? this.trendingGames,
       popularGames: popularGames ?? this.popularGames,
+      recentlyReleasedGames: recentlyReleasedGames ?? this.recentlyReleasedGames,
     );
   }
 }
@@ -36,12 +40,19 @@ class HomeNotifier extends ChangeNotifier {
     _state = _state.copyWith(
       trendingGames: const AsyncLoading(),
       popularGames: const AsyncLoading(),
+      recentlyReleasedGames: const AsyncLoading(),
     );
     notifyListeners();
 
     try {
-      final trending = await _repository.getTrendingGames();
-      final popular = await _repository.getTrendingGames(page: 2);
+      final results = await Future.wait([
+        _repository.getTrendingGames(),
+        _repository.getTrendingGames(page: 2),
+        _repository.getRecentlyReleasedGames(),
+      ]);
+      final trending = results[0];
+      final popular = results[1];
+      final recentlyReleased = results[2];
 
       _state = _state.copyWith(
         trendingGames: trending.isEmpty
@@ -50,11 +61,15 @@ class HomeNotifier extends ChangeNotifier {
         popularGames: popular.isEmpty
             ? const AsyncEmpty()
             : AsyncData(popular),
+        recentlyReleasedGames: recentlyReleased.isEmpty
+            ? const AsyncEmpty()
+            : AsyncData(recentlyReleased),
       );
     } catch (e) {
       _state = _state.copyWith(
         trendingGames: AsyncError(e.toString()),
         popularGames: AsyncError(e.toString()),
+        recentlyReleasedGames: AsyncError(e.toString()),
       );
     }
     notifyListeners();

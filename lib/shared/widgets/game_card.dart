@@ -42,6 +42,7 @@ class GameCard extends StatelessWidget {
                         game.backgroundImage!,
                         width: double.infinity,
                         fit: BoxFit.cover,
+                        gaplessPlayback: true,
                         errorBuilder: (context, error, stackTrace) =>
                             _buildPlaceholderImage(),
                       )

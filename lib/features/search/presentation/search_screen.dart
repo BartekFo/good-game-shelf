@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/state/async_state.dart';
 import '../../../core/theme/app_colors.dart';
@@ -116,7 +117,10 @@ class _SearchScreenState extends State<SearchScreen> {
       itemCount: games.length,
       itemBuilder: (context, index) {
         final game = games[index];
-        return GameCard(game: game);
+        return GameCard(
+          game: game,
+          onTap: () => context.push('/game/${game.id}'),
+        );
       },
     );
   }

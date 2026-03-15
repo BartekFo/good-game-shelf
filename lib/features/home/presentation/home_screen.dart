@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/state/async_state.dart';
 import '../../../core/theme/app_colors.dart';
@@ -65,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _buildSection(
                   context,
                   title: 'Recently Released',
-                  state: state.popularGames,
+                  state: state.recentlyReleasedGames,
                 ),
               ],
             ),
@@ -106,14 +109,27 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildGamesList(BuildContext context, List games) {
-    return ListView.separated(
-      scrollDirection: Axis.horizontal,
-      itemCount: games.length,
-      separatorBuilder: (context, index) => const SizedBox(width: AppSpacing.sm),
-      itemBuilder: (context, index) {
-        final game = games[index];
-        return GameCard(game: game);
-      },
+    return ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(
+        dragDevices: {
+          PointerDeviceKind.touch,
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.trackpad,
+        },
+      ),
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        cacheExtent: 500,
+        itemCount: games.length,
+        separatorBuilder: (context, index) => const SizedBox(width: AppSpacing.sm),
+        itemBuilder: (context, index) {
+          final game = games[index];
+          return GameCard(
+            game: game,
+            onTap: () => context.push('/game/${game.id}'),
+          );
+        },
+      ),
     );
   }
 

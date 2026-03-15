@@ -8,12 +8,19 @@ class RawgApiClient {
 
   final ApiClient _apiClient;
 
-  Future<List<RawgGameSummaryDto>> fetchGames({String? search, int page = 1}) async {
+  Future<List<RawgGameSummaryDto>> fetchGames({
+    String? search,
+    int page = 1,
+    String? ordering,
+    String? dates,
+  }) async {
     final response = await _apiClient.get(
       RawgEndpoints.games,
       queryParameters: <String, dynamic>{
         'page': page,
         if (search != null && search.trim().isNotEmpty) 'search': search,
+        if (ordering != null) 'ordering': ordering,
+        if (dates != null) 'dates': dates,
       },
     );
 

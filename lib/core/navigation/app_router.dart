@@ -63,7 +63,10 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.gameDetails,
         builder: (BuildContext context, GoRouterState state) {
-          return GameDetailsScreen(gameId: state.pathParameters['id']);
+          return GameDetailsScreen(
+            gameId: state.pathParameters['id'],
+            repository: discoveryRepository,
+          );
         },
       ),
     ],
